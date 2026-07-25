@@ -174,3 +174,39 @@ document.querySelectorAll('.btn-primary, .nav-link--cta').forEach(btn => {
 window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 });
+
+/* Download counter: Cloudflare Worker streams the DMG and counts completed transfers only. */
+const DOWNLOAD_WORKER_BASE = 'https://axis-downloads.axis-browser-dl.workers.dev';
+const DIRECT_DMG_URL =
+    'https://media.githubusercontent.com/media/AbdelrahmanBerchan/axis.github.io/main/downloads/Axis-0.3.0-arm64.dmg';
+
+const macDownloadBtn = document.getElementById('download-mac');
+if (macDownloadBtn) {
+    macDownloadBtn.href = DOWNLOAD_WORKER_BASE
+        ? `${DOWNLOAD_WORKER_BASE}/download/mac`
+        : DIRECT_DMG_URL;
+}
+
+async function refreshMacDownloadCount() {
+    const el = document.getElementById('mac-download-count');
+    if (!el) return;
+
+    if (!DOWNLOAD_WORKER_BASE) {
+        el.textContent = '—';
+        return;
+    }
+
+    try {
+        const res = await fetch(`${DOWNLOAD_WORKER_BASE}/api/count`, {
+            headers: { accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error('count failed');
+        const data = await res.json();
+        const n = Number(data.count);
+        el.textContent = Number.isFinite(n) ? n.toLocaleString() : '0';
+    } catch {
+        el.textContent = '—';
+    }
+}
+
+refreshMacDownloadCount();
