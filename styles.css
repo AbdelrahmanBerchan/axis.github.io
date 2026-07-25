@@ -1117,18 +1117,14 @@ a {
 
 .download-note--macos {
     margin-top: 0.75rem;
-    max-width: 36rem;
+    max-width: 38rem;
     margin-inline: auto;
     line-height: 1.55;
 }
 
-.download-note--macos code {
-    font-family: "SF Mono", "Menlo", "Consolas", monospace;
-    font-size: 0.8125em;
+.download-note--macos strong {
     color: var(--text-secondary);
-    background: rgba(255, 255, 255, 0.04);
-    padding: 0.12em 0.4em;
-    border-radius: 4px;
+    font-weight: 600;
 }
 
 /* ─── Footer ─── */
