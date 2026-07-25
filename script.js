@@ -175,26 +175,46 @@ window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 });
 
-/* Download counter: Cloudflare Worker streams the DMG and counts completed transfers only. */
+/* Download counter: one counted download per browser/device (localStorage id). */
 const DOWNLOAD_WORKER_BASE = 'https://axis-downloads.axis-browser-dl.workers.dev';
 const DIRECT_DMG_URL =
     'https://media.githubusercontent.com/media/AbdelrahmanBerchan/axis.github.io/main/downloads/Axis-0.3.0-arm64.dmg';
+const DEVICE_STORAGE_KEY = 'axis_device_id';
+
+function getAxisDeviceId() {
+    try {
+        let id = localStorage.getItem(DEVICE_STORAGE_KEY);
+        if (id && /^[A-Za-z0-9_-]{8,80}$/.test(id)) return id;
+        id = (crypto.randomUUID && crypto.randomUUID().replace(/-/g, '')) ||
+            `d${Date.now().toString(36)}${Math.random().toString(36).slice(2, 12)}`;
+        localStorage.setItem(DEVICE_STORAGE_KEY, id);
+        return id;
+    } catch {
+        return '';
+    }
+}
+
+function macDownloadUrl() {
+    if (!DOWNLOAD_WORKER_BASE) return DIRECT_DMG_URL;
+    const id = getAxisDeviceId();
+    const url = `${DOWNLOAD_WORKER_BASE}/download/mac`;
+    return id ? `${url}?device=${encodeURIComponent(id)}` : url;
+}
 
 const macDownloadBtn = document.getElementById('download-mac');
 if (macDownloadBtn) {
-    macDownloadBtn.href = DOWNLOAD_WORKER_BASE
-        ? `${DOWNLOAD_WORKER_BASE}/download/mac`
-        : DIRECT_DMG_URL;
+    macDownloadBtn.href = macDownloadUrl();
 
-    // After a download starts, poll a bit so the label catches up when it finishes.
     macDownloadBtn.addEventListener('click', () => {
+        // Refresh href in case storage was empty on first paint
+        macDownloadBtn.href = macDownloadUrl();
         if (!DOWNLOAD_WORKER_BASE) return;
         let ticks = 0;
         const id = setInterval(() => {
             refreshMacDownloadCount();
             ticks += 1;
-            if (ticks >= 40) clearInterval(id); // ~3–4 minutes while a large DMG finishes
-        }, 5000);
+            if (ticks >= 12) clearInterval(id);
+        }, 2000);
     });
 }
 

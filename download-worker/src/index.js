@@ -1,13 +1,11 @@
 /**
  * Axis download counter (Cloudflare Worker)
  *
- * IMPORTANT: We do NOT proxy the DMG bytes through this Worker.
- * Proxying large binaries was truncating/corrupting the file (~31MB of 117MB),
- * which made macOS report the app as damaged and move it to Trash.
- *
  * Flow:
- *   GET /download/mac  →  302 redirect to the real GitHub LFS DMG
- *   Count increments when a download is granted (rate-limited per IP)
+ *   GET /download/mac?device=<id>  →  302 to the real GitHub LFS DMG
+ *   Count +1 at most once per device id (browser), forever
+ *
+ * Uninstalls cannot be detected from a website download counter.
  *
  * - No public API to set/edit the count
  * - Stats: GET /api/stats with Authorization: Bearer <STATS_SECRET>
@@ -15,7 +13,9 @@
  */
 
 const COUNT_KEY = 'downloads:mac:total';
+const DEVICE_COOKIE = 'axis_device';
 const DAY_MS = 24 * 60 * 60 * 1000;
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365 * 5; // 5 years
 
 function json(data, status = 200, extra = {}) {
     return new Response(JSON.stringify(data), {
@@ -63,9 +63,28 @@ function isAllowedReferrer(request, allowed) {
         }
     }
 
-    // Direct hits (no Referer) — still allowed but rate-limited.
     if (!origin && !referer) return true;
     return false;
+}
+
+function getCookie(request, name) {
+    const raw = request.headers.get('Cookie') || '';
+    for (const part of raw.split(';')) {
+        const [k, ...rest] = part.trim().split('=');
+        if (k === name) return decodeURIComponent(rest.join('=') || '');
+    }
+    return '';
+}
+
+/** Accept site UUIDs / opaque ids; reject junk. */
+function normalizeDeviceId(value) {
+    const id = String(value || '').trim().slice(0, 80);
+    if (!/^[A-Za-z0-9_-]{8,80}$/.test(id)) return '';
+    return id;
+}
+
+function randomDeviceId() {
+    return crypto.randomUUID().replace(/-/g, '');
 }
 
 async function getCount(env) {
@@ -74,17 +93,26 @@ async function getCount(env) {
     return Number.isFinite(n) && n >= 0 ? n : 0;
 }
 
-async function incrementCount(env, rlKey, maxPerDay) {
-    const usedNow = Number.parseInt((await env.DOWNLOADS.get(rlKey)) || '0', 10) || 0;
-    if (usedNow >= maxPerDay) return false;
+async function tryCountDevice(env, deviceId, ip, maxNewDevicesPerIpPerDay) {
+    const deviceKey = `device:${deviceId}`;
+    const already = await env.DOWNLOADS.get(deviceKey);
+    if (already) return { counted: false, reason: 'already' };
 
-    await env.DOWNLOADS.put(rlKey, String(usedNow + 1), {
+    // Soft anti-farm: limit how many *new* devices one IP can register per day
+    const rlKey = dayKey(ip);
+    const used = Number.parseInt((await env.DOWNLOADS.get(rlKey)) || '0', 10) || 0;
+    if (used >= maxNewDevicesPerIpPerDay) {
+        return { counted: false, reason: 'ip_limit' };
+    }
+
+    await env.DOWNLOADS.put(deviceKey, '1');
+    await env.DOWNLOADS.put(rlKey, String(used + 1), {
         expirationTtl: Math.ceil(DAY_MS / 1000) + 3600,
     });
 
     const current = await getCount(env);
     await env.DOWNLOADS.put(COUNT_KEY, String(current + 1));
-    return true;
+    return { counted: true, reason: 'new' };
 }
 
 async function handleCount(env) {
@@ -108,15 +136,19 @@ async function handleStats(request, env) {
     return json({
         count,
         file: env.DMG_FILENAME || 'Axis-0.3.0-arm64.dmg',
-        note: 'Count increases when a macOS download redirect is granted (file is served directly from GitHub for integrity).',
+        note: 'Count increases at most once per device (browser id). Uninstalls are not detectable.',
     });
 }
 
 async function handleDownload(request, env, ctx) {
     const allowed = parseAllowed(env);
-    const maxPerDay = Math.max(1, Number.parseInt(env.MAX_PER_IP_PER_DAY || '100', 10) || 100);
+    const maxNewDevicesPerIpPerDay = Math.max(
+        1,
+        Number.parseInt(env.MAX_NEW_DEVICES_PER_IP_PER_DAY || '5', 10) || 5
+    );
     const ip = clientIp(request);
     const dmgUrl = env.DMG_URL;
+    const url = new URL(request.url);
 
     if (!dmgUrl) {
         return json({ error: 'DMG_URL not configured' }, 500);
@@ -126,21 +158,24 @@ async function handleDownload(request, env, ctx) {
         return json({ error: 'Download must be started from the Axis website.' }, 403);
     }
 
-    const rlKey = dayKey(ip);
-    const used = Number.parseInt((await env.DOWNLOADS.get(rlKey)) || '0', 10) || 0;
+    let deviceId =
+        normalizeDeviceId(url.searchParams.get('device')) ||
+        normalizeDeviceId(getCookie(request, DEVICE_COOKIE));
 
-    // Always send people to the real intact file. Only skip counting when rate-limited.
-    if (used < maxPerDay) {
-        ctx.waitUntil(incrementCount(env, rlKey, maxPerDay));
+    if (!deviceId) {
+        deviceId = randomDeviceId();
     }
+
+    // Always send the intact file. Count only the first time we see this device.
+    ctx.waitUntil(tryCountDevice(env, deviceId, ip, maxNewDevicesPerIpPerDay));
 
     return new Response(null, {
         status: 302,
         headers: {
             location: dmgUrl,
             'cache-control': 'no-store',
-            // Help some clients keep a sensible filename after redirect.
             'content-disposition': `attachment; filename="${env.DMG_FILENAME || 'Axis-0.3.0-arm64.dmg'}"`,
+            'set-cookie': `${DEVICE_COOKIE}=${encodeURIComponent(deviceId)}; Max-Age=${COOKIE_MAX_AGE}; Path=/; Secure; SameSite=Lax; HttpOnly`,
         },
     });
 }
