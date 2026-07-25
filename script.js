@@ -185,6 +185,17 @@ if (macDownloadBtn) {
     macDownloadBtn.href = DOWNLOAD_WORKER_BASE
         ? `${DOWNLOAD_WORKER_BASE}/download/mac`
         : DIRECT_DMG_URL;
+
+    // After a download starts, poll a bit so the label catches up when it finishes.
+    macDownloadBtn.addEventListener('click', () => {
+        if (!DOWNLOAD_WORKER_BASE) return;
+        let ticks = 0;
+        const id = setInterval(() => {
+            refreshMacDownloadCount();
+            ticks += 1;
+            if (ticks >= 40) clearInterval(id); // ~3–4 minutes while a large DMG finishes
+        }, 5000);
+    });
 }
 
 async function refreshMacDownloadCount() {
@@ -199,6 +210,7 @@ async function refreshMacDownloadCount() {
     try {
         const res = await fetch(`${DOWNLOAD_WORKER_BASE}/api/count`, {
             headers: { accept: 'application/json' },
+            cache: 'no-store',
         });
         if (!res.ok) throw new Error('count failed');
         const data = await res.json();
@@ -210,3 +222,7 @@ async function refreshMacDownloadCount() {
 }
 
 refreshMacDownloadCount();
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') refreshMacDownloadCount();
+});
+setInterval(refreshMacDownloadCount, 30000);
