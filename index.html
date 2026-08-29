@@ -19,7 +19,7 @@
     <meta property="og:description" content="Open source, privacy first, and fast. A lightweight browser with a minimal interface.">
     <meta property="og:type" content="website">
     <link rel="icon" href="Axis_logo.png" type="image/png">
-    <link rel="stylesheet" href="styles.css?v=grain-2">
+    <link rel="stylesheet" href="styles.css?v=hero-nav-2">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -38,45 +38,52 @@
                 <span>Axis</span>
             </a>
 
-            <nav class="nav" aria-label="Primary">
-                <a href="#features" data-i18n="nav.features">Features</a>
-                <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
-                <a href="#values" data-i18n="nav.values">Why Axis</a>
-                <a href="#download" data-i18n="nav.download">Download</a>
-            </nav>
+            <div class="header-end">
+                <nav class="nav" aria-label="Primary">
+                    <a href="#features" data-i18n="nav.features">Features</a>
+                    <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
+                    <a href="#values" data-i18n="nav.values">Why Axis</a>
+                    <a href="#download" data-i18n="nav.download">Download</a>
+                </nav>
 
-            <div class="header-actions">
-                <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Toggle light mode">
-                    <span class="theme-toggle-track" aria-hidden="true">
-                        <span class="theme-toggle-thumb"></span>
-                    </span>
-                    <span class="theme-toggle-label" data-i18n-theme-label>Light</span>
-                </button>
-
-                <div class="lang-picker" id="lang-picker">
-                    <button type="button" class="lang-trigger" id="lang-trigger" aria-expanded="false" aria-haspopup="listbox" aria-controls="lang-panel" data-i18n-aria="nav.lang" aria-label="Language">
-                        <svg class="lang-trigger-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.8 2.4 4.2 5.6 4.2 9s-1.4 6.6-4.2 9c-2.8-2.4-4.2-5.6-4.2-9S9.2 5.4 12 3z" stroke="currentColor" stroke-width="1.6"/></svg>
-                        <span class="lang-trigger-code" id="lang-trigger-code">EN</span>
+                <div class="header-actions">
+                    <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false" aria-label="Light">
+                        <span class="theme-toggle-icons" aria-hidden="true">
+                            <svg class="theme-icon theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="4.25" stroke="currentColor" stroke-width="1.7"/>
+                                <path d="M12 2.75v2.1M12 19.15v2.1M2.75 12h2.1M19.15 12h2.1M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M18.6 5.4l-1.5 1.5M6.9 17.1l-1.5 1.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                            </svg>
+                            <svg class="theme-icon theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M19.5 13.35A7.75 7.75 0 0 1 10.65 4.5 7.8 7.8 0 1 0 19.5 13.35Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
                     </button>
-                    <div class="lang-panel" id="lang-panel" hidden>
-                        <div class="lang-panel-head">
-                            <label class="lang-search-wrap">
-                                <svg class="lang-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-                                <span class="visually-hidden" data-i18n="nav.searchLang">Search languages</span>
-                                <input type="search" id="lang-search" class="lang-search" autocomplete="off" data-i18n-placeholder="nav.searchLang" placeholder="Search languages">
-                            </label>
-                            <p class="lang-status" id="lang-status" hidden data-i18n="nav.translating">Translating…</p>
-                        </div>
-                        <div class="lang-panel-scroll">
-                            <ul class="lang-list" id="lang-list" role="listbox" data-i18n-aria="nav.lang" aria-label="Language"></ul>
-                            <p class="lang-empty" id="lang-empty" hidden data-i18n="nav.noLang">No languages found</p>
+
+                    <div class="lang-picker" id="lang-picker">
+                        <button type="button" class="lang-trigger" id="lang-trigger" aria-expanded="false" aria-haspopup="listbox" aria-controls="lang-panel" data-i18n-aria="nav.lang" aria-label="Language">
+                            <svg class="lang-trigger-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.8 2.4 4.2 5.6 4.2 9s-1.4 6.6-4.2 9c-2.8-2.4-4.2-5.6-4.2-9S9.2 5.4 12 3z" stroke="currentColor" stroke-width="1.6"/></svg>
+                            <span class="lang-trigger-code" id="lang-trigger-code">EN</span>
+                        </button>
+                        <div class="lang-panel" id="lang-panel" hidden>
+                            <div class="lang-panel-head">
+                                <label class="lang-search-wrap">
+                                    <svg class="lang-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                                    <span class="visually-hidden" data-i18n="nav.searchLang">Search languages</span>
+                                    <input type="search" id="lang-search" class="lang-search" autocomplete="off" data-i18n-placeholder="nav.searchLang" placeholder="Search languages">
+                                </label>
+                                <p class="lang-status" id="lang-status" hidden data-i18n="nav.translating">Translating…</p>
+                            </div>
+                            <div class="lang-panel-scroll">
+                                <ul class="lang-list" id="lang-list" role="listbox" data-i18n-aria="nav.lang" aria-label="Language"></ul>
+                                <p class="lang-empty" id="lang-empty" hidden data-i18n="nav.noLang">No languages found</p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" data-i18n-aria="nav.menu" aria-label="Menu">
-                    <span></span><span></span>
-                </button>
+                    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" data-i18n-aria="nav.menu" aria-label="Menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
             </div>
         </div>
         <div class="mobile-nav" id="mobile-nav" hidden>
@@ -91,17 +98,11 @@
         <section id="top" class="hero">
             <div class="shell hero-grid">
                 <div class="hero-copy">
-                    <p class="hero-kicker reveal" data-i18n="hero.badge">Open source. Privacy first</p>
                     <h1 class="hero-brand reveal">Axis</h1>
-                    <p class="hero-line reveal" data-i18n="hero.titlePlain">A browser built for speed and focus.</p>
+                    <p class="hero-line reveal" data-i18n="hero.titlePlain">Open source. Privacy first.</p>
                     <p class="hero-desc reveal" data-i18n="hero.desc">
-                        Fast, lightweight, and quiet. Packed with real privacy controls. We never sell your data.
+                        Fast, lightweight, and quiet. Packed with real privacy controls. We never and will never sell your data to brokers, advertisers, or anyone else.
                     </p>
-                    <ul class="hero-promises reveal">
-                        <li data-i18n="hero.p1">We never sell your data</li>
-                        <li data-i18n="hero.p2">No tracking by default</li>
-                        <li data-i18n="hero.p3">Open source you can audit</li>
-                    </ul>
                     <div class="hero-actions reveal">
                         <a href="#download" class="btn btn-solid">
                             <span data-i18n="hero.download">Download for macOS</span>
@@ -123,28 +124,28 @@
                 <div class="marquee-track">
                     <span data-i18n="marquee.m1">Quieter browse</span><span>·</span>
                     <span data-i18n="marquee.m2">Languages your way</span><span>·</span>
-                    <span data-i18n="marquee.m3">Built in ad blocker</span><span>·</span>
+                    <span data-i18n="marquee.m3">Privacy protection</span><span>·</span>
                     <span data-i18n="marquee.m4">Zero telemetry</span><span>·</span>
                     <span data-i18n="marquee.m5">Sidebar first</span><span>·</span>
                     <span data-i18n="marquee.m6">Glass sidebar</span><span>·</span>
-                    <span data-i18n="marquee.m7">HTTPS only</span><span>·</span>
-                    <span data-i18n="marquee.m8">JS control</span><span>·</span>
-                    <span data-i18n="marquee.m9">Dark and light</span><span>·</span>
+                    <span data-i18n="marquee.m7">Tracker and fingerprint block</span><span>·</span>
+                    <span data-i18n="marquee.m8">No account required</span><span>·</span>
+                    <span data-i18n="marquee.m9">Your own AI API keys</span><span>·</span>
                     <span data-i18n="marquee.m10">Open source</span><span>·</span>
                     <span data-i18n="marquee.m11">No data selling</span><span>·</span>
-                    <span data-i18n="marquee.m12">Per profile languages</span><span>·</span>
+                    <span data-i18n="marquee.m12">Actively maintained</span><span>·</span>
                     <span data-i18n="marquee.m1">Quieter browse</span><span>·</span>
                     <span data-i18n="marquee.m2">Languages your way</span><span>·</span>
-                    <span data-i18n="marquee.m3">Built in ad blocker</span><span>·</span>
+                    <span data-i18n="marquee.m3">Privacy protection</span><span>·</span>
                     <span data-i18n="marquee.m4">Zero telemetry</span><span>·</span>
                     <span data-i18n="marquee.m5">Sidebar first</span><span>·</span>
                     <span data-i18n="marquee.m6">Glass sidebar</span><span>·</span>
-                    <span data-i18n="marquee.m7">HTTPS only</span><span>·</span>
-                    <span data-i18n="marquee.m8">JS control</span><span>·</span>
-                    <span data-i18n="marquee.m9">Dark and light</span><span>·</span>
+                    <span data-i18n="marquee.m7">Tracker and fingerprint block</span><span>·</span>
+                    <span data-i18n="marquee.m8">No account required</span><span>·</span>
+                    <span data-i18n="marquee.m9">Your own AI API keys</span><span>·</span>
                     <span data-i18n="marquee.m10">Open source</span><span>·</span>
                     <span data-i18n="marquee.m11">No data selling</span><span>·</span>
-                    <span data-i18n="marquee.m12">Per profile languages</span><span>·</span>
+                    <span data-i18n="marquee.m12">Actively maintained</span><span>·</span>
                 </div>
             </div>
         </section>
@@ -169,8 +170,8 @@
                         <p data-i18n="features.f18.desc">Set one language for the whole app, or choose a different language per profile.</p>
                     </li>
                     <li class="feature-item reveal">
-                        <h3 data-i18n="features.f1.title">Built in ad blocker</h3>
-                        <p data-i18n="features.f1.desc">Ads and known trackers blocked with filter lists on by default.</p>
+                        <h3 data-i18n="features.f1.title">Privacy protection</h3>
+                        <p data-i18n="features.f1.desc">Blocks fingerprinting, trackers, and ads. On by default.</p>
                     </li>
                     <li class="feature-item reveal">
                         <h3 data-i18n="features.f17.title">Zero telemetry</h3>
@@ -209,7 +210,7 @@
                     </article>
                     <article class="privacy-card reveal">
                         <h3 data-i18n="privacy.c3.title">Tools that actually protect you</h3>
-                        <p data-i18n="privacy.c3.desc">Ad and tracker blocking, HTTPS only warnings, and JS control. Switches you can use, not slogans.</p>
+                        <p data-i18n="privacy.c3.desc">Privacy protection against fingerprinting, trackers, and ads, plus HTTPS only warnings and JS control. Switches you can use, not slogans.</p>
                     </article>
                     <article class="privacy-card reveal">
                         <h3 data-i18n="privacy.c4.title">Verify it yourself</h3>
@@ -320,7 +321,7 @@
         </div>
     </footer>
 
-    <script src="i18n.js?v=auto-3"></script>
-    <script src="script.js?v=auto-3"></script>
+    <script src="i18n.js?v=hero-nav-1"></script>
+    <script src="script.js?v=theme-icon-1"></script>
 </body>
 </html>

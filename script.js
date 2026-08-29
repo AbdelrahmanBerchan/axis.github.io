@@ -338,8 +338,6 @@ function paintTheme(theme) {
     if (themeToggle) {
         const isLight = next === 'light';
         themeToggle.setAttribute('aria-pressed', isLight ? 'true' : 'false');
-        const label = themeToggle.querySelector('.theme-toggle-label');
-        if (label) label.textContent = t(isLight ? 'nav.themeDark' : 'nav.themeLight');
         themeToggle.setAttribute('aria-label', t(isLight ? 'nav.themeDark' : 'nav.themeLight'));
     }
     if (themeColorMeta) {
