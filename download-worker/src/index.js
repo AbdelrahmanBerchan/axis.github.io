@@ -135,7 +135,7 @@ async function handleStats(request, env) {
     const count = await getCount(env);
     return json({
         count,
-        file: env.DMG_FILENAME || 'Axis-0.3.0-arm64.dmg',
+        file: env.DMG_FILENAME || 'Axis-0.3.1-arm64.dmg',
         note: 'Count increases at most once per device (browser id). Uninstalls are not detectable.',
     });
 }
@@ -174,7 +174,7 @@ async function handleDownload(request, env, ctx) {
         headers: {
             location: dmgUrl,
             'cache-control': 'no-store',
-            'content-disposition': `attachment; filename="${env.DMG_FILENAME || 'Axis-0.3.0-arm64.dmg'}"`,
+            'content-disposition': `attachment; filename="${env.DMG_FILENAME || 'Axis-0.3.1-arm64.dmg'}"`,
             'set-cookie': `${DEVICE_COOKIE}=${encodeURIComponent(deviceId)}; Max-Age=${COOKIE_MAX_AGE}; Path=/; Secure; SameSite=Lax; HttpOnly`,
         },
     });

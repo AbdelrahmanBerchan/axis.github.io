@@ -4,7 +4,7 @@
  */
 window.AXIS_I18N = {
   defaultLang: "en",
-  sourceHash: "20260829g",
+  sourceHash: "20260905a",
   catalog: [
     { code: "en", native: "English", name: "English", dir: "ltr", translate: "en" },
     { code: "ar", native: "العربية", name: "Arabic", dir: "rtl", translate: "ar" },
@@ -129,7 +129,7 @@ window.AXIS_I18N = {
       "download.eyebrow": "Get started",
       "download.title": "Get Axis Browser",
       "download.subtitle": "Minimal. Customizable. Built for speed.",
-      "download.meta": "Apple Silicon v0.3.0. {count} downloads",
+      "download.meta": "Apple Silicon v0.3.1. {count} downloads",
       "download.soon": "Coming soon",
       "download.note": "macOS (Apple Silicon) is ready. Follow <a href=\"https://github.com/AbdelrahmanBerchan/Axis-Browser/releases\" target=\"_blank\" rel=\"noopener noreferrer\">releases on GitHub</a> for Windows and Linux.",
       "download.gatekeeper": "If macOS blocks Axis, open <strong>System Settings → Privacy &amp; Security</strong>, then choose <strong>Open Anyway</strong>.",
