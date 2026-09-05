@@ -705,17 +705,25 @@ function getAxisDeviceId() {
 }
 
 function macDownloadUrl() {
-    if (!DOWNLOAD_WORKER_BASE) return DIRECT_DMG_URL;
+    // Serve the DMG directly. The worker still records counts on click.
+    return DIRECT_DMG_URL;
+}
+
+function recordMacDownload() {
+    if (!DOWNLOAD_WORKER_BASE) return;
     const id = getAxisDeviceId();
     const base = `${DOWNLOAD_WORKER_BASE}/download/mac`;
-    return id ? `${base}?device=${encodeURIComponent(id)}` : base;
+    const url = id ? `${base}?device=${encodeURIComponent(id)}` : base;
+    fetch(url, { mode: 'no-cors', credentials: 'include' }).catch(() => {});
 }
 
 const macBtn = document.getElementById('download-mac');
 if (macBtn) {
     macBtn.href = macDownloadUrl();
+    macBtn.setAttribute('download', 'Axis-0.3.1-arm64.dmg');
     macBtn.addEventListener('click', () => {
         macBtn.href = macDownloadUrl();
+        recordMacDownload();
         let ticks = 0;
         const timer = setInterval(() => {
             refreshMacDownloadCount();
