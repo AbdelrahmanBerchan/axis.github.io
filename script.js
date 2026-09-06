@@ -687,7 +687,7 @@ function initReveals() {
 
 const DOWNLOAD_WORKER_BASE = 'https://axis-downloads.axis-browser-dl.workers.dev';
 const DIRECT_DMG_URL =
-    'https://media.githubusercontent.com/media/AbdelrahmanBerchan/axis.github.io/main/downloads/Axis-0.3.1-arm64.dmg';
+    'https://github.com/AbdelrahmanBerchan/Axis-Browser/releases/download/v0.3.1/Axis-0.3.1-arm64.dmg';
 const DEVICE_STORAGE_KEY = 'axis_device_id';
 
 function getAxisDeviceId() {
@@ -705,7 +705,6 @@ function getAxisDeviceId() {
 }
 
 function macDownloadUrl() {
-    // Serve the DMG directly. The worker still records counts on click.
     return DIRECT_DMG_URL;
 }
 
@@ -714,13 +713,15 @@ function recordMacDownload() {
     const id = getAxisDeviceId();
     const base = `${DOWNLOAD_WORKER_BASE}/download/mac`;
     const url = id ? `${base}?device=${encodeURIComponent(id)}` : base;
-    fetch(url, { mode: 'no-cors', credentials: 'include' }).catch(() => {});
+    // Do not follow redirects; only ask the worker to count this device.
+    fetch(url, { method: 'GET', redirect: 'manual', mode: 'cors', credentials: 'omit' }).catch(() => {});
 }
 
 const macBtn = document.getElementById('download-mac');
 if (macBtn) {
     macBtn.href = macDownloadUrl();
-    macBtn.setAttribute('download', 'Axis-0.3.1-arm64.dmg');
+    macBtn.removeAttribute('download');
+    macBtn.setAttribute('rel', 'noopener noreferrer');
     macBtn.addEventListener('click', () => {
         macBtn.href = macDownloadUrl();
         recordMacDownload();
