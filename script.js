@@ -377,6 +377,17 @@ function applyTheme(theme, { animate = false } = {}) {
     }, 480);
 }
 
+function enterPage() {
+    const finish = () => document.documentElement.classList.add('is-entered');
+    if (prefersReducedMotion) {
+        finish();
+        return;
+    }
+    requestAnimationFrame(() => {
+        requestAnimationFrame(finish);
+    });
+}
+
 function detectLang() {
     try {
         const saved = localStorage.getItem(LANG_KEY);
@@ -587,6 +598,8 @@ if (themeToggle) {
         applyTheme(getTheme() === 'light' ? 'dark' : 'light', { animate: true });
     });
 }
+
+enterPage();
 
 if (navToggle && mobileNav) {
     navToggle.addEventListener('click', () => {

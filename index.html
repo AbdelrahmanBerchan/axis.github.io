@@ -8,6 +8,7 @@
     <script>
         (function () {
             try {
+                localStorage.removeItem('axis_theme_pref');
                 var t = localStorage.getItem('axis_theme');
                 if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
             } catch (e) {}
@@ -19,12 +20,13 @@
     <meta property="og:description" content="Open source, privacy first, and fast. A lightweight browser with a minimal interface.">
     <meta property="og:type" content="website">
     <link rel="icon" href="Axis_logo.png" type="image/png">
-    <link rel="stylesheet" href="styles.css?v=hero-nav-2">
+    <link rel="stylesheet" href="styles.css?v=theme-manual-1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="page-enter" aria-hidden="true"></div>
     <a href="#main" class="skip-link" data-i18n="skip">Skip to content</a>
     <div class="stage" aria-hidden="true">
         <div class="stage-wash"></div>
@@ -322,6 +324,6 @@
     </footer>
 
     <script src="i18n.js?v=v031"></script>
-    <script src="script.js?v=v031-release"></script>
+    <script src="script.js?v=theme-manual-1"></script>
 </body>
 </html>

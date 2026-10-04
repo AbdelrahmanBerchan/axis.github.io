@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0c0b0a" id="theme-color-meta">
+    <meta name="color-scheme" content="dark light">
+    <meta name="robots" content="noindex, nofollow">
+    <script>
+        (function () {
+            try {
+                localStorage.removeItem('axis_theme_pref');
+                var t = localStorage.getItem('axis_theme');
+                if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {}
+        })();
+    </script>
+    <title>Axis · Join</title>
+    <meta name="description" content="Join the Axis Browser community on Discord and follow along.">
+    <link rel="icon" href="Axis_logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css?v=theme-manual-1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .join-page {
+            min-height: 100svh;
+            display: grid;
+            place-items: center;
+            padding: 2.5rem 1.25rem 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .join-card {
+            width: min(26rem, 100%);
+            text-align: center;
+        }
+
+        .join-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            color: var(--bone);
+            text-decoration: none;
+            margin-bottom: 2.4rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition:
+                opacity 0.7s var(--ease-out),
+                transform 0.7s var(--ease-out);
+        }
+
+        .join-brand img {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.45rem;
+        }
+
+        .join-brand span {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .join-title {
+            font-size: clamp(1.85rem, 4.5vw, 2.35rem);
+            font-weight: 650;
+            letter-spacing: -0.035em;
+            line-height: 1.15;
+            margin-bottom: 0.75rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition:
+                opacity 0.75s var(--ease-out) 0.06s,
+                transform 0.75s var(--ease-out) 0.06s;
+        }
+
+        .join-desc {
+            color: var(--bone-dim);
+            font-size: 1.02rem;
+            line-height: 1.55;
+            margin: 0 auto 1.85rem;
+            max-width: 22rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition:
+                opacity 0.75s var(--ease-out) 0.12s,
+                transform 0.75s var(--ease-out) 0.12s;
+        }
+
+        .join-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            width: 100%;
+            min-height: 3.15rem;
+            padding: 0.85rem 1.35rem;
+            border-radius: var(--radius-pill);
+            background: var(--btn-solid-bg);
+            color: var(--btn-solid-fg);
+            font-weight: 600;
+            font-size: 0.98rem;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            transition:
+                transform 0.25s var(--ease),
+                opacity 0.75s var(--ease-out) 0.18s,
+                filter 0.25s var(--ease);
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        .join-cta:hover {
+            filter: brightness(1.06);
+        }
+
+        .join-cta:active {
+            transform: translateY(1px) scale(0.99);
+        }
+
+        .join-cta svg {
+            width: 1.15rem;
+            height: 1.15rem;
+            flex-shrink: 0;
+        }
+
+        .join-socials {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.35rem 1.15rem;
+            margin-top: 1.85rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition:
+                opacity 0.75s var(--ease-out) 0.24s,
+                transform 0.75s var(--ease-out) 0.24s;
+        }
+
+        .join-socials a {
+            color: var(--bone-mute);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .join-socials a:hover {
+            color: var(--bone);
+        }
+
+        html.is-entered .join-brand,
+        html.is-entered .join-title,
+        html.is-entered .join-desc,
+        html.is-entered .join-cta,
+        html.is-entered .join-socials {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .join-brand,
+            .join-title,
+            .join-desc,
+            .join-cta,
+            .join-socials {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-enter" aria-hidden="true"></div>
+    <div class="stage" aria-hidden="true">
+        <div class="stage-wash"></div>
+    </div>
+    <div class="stage-grain" aria-hidden="true"></div>
+
+    <main class="join-page">
+        <div class="join-card">
+            <a class="join-brand" href="https://www.axis-browser.com/" aria-label="Axis Browser">
+                <img src="Axis_logo.png" alt="" width="32" height="32">
+                <span>Axis</span>
+            </a>
+            <h1 class="join-title">Come hang with us</h1>
+            <p class="join-desc">
+                Join the Discord for builds, feedback, and updates. Or follow along wherever you already are.
+            </p>
+            <a class="join-cta" href="https://discord.gg/PP4hzwSZbf" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                </svg>
+                Join Discord
+            </a>
+            <div class="join-socials">
+                <a href="https://x.com/axis_browser" target="_blank" rel="noopener noreferrer">X</a>
+                <a href="https://github.com/AbdelrahmanBerchan/Axis-Browser" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.patreon.com/c/AbdelrahmanBerchan" target="_blank" rel="noopener noreferrer">Patreon</a>
+                <a href="https://www.axis-browser.com/">Website</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            var reduce = false;
+            try {
+                reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            } catch (_) {}
+
+            var theme = 'dark';
+            try {
+                var saved = localStorage.getItem('axis_theme');
+                if (saved === 'light' || saved === 'dark') theme = saved;
+            } catch (_) {}
+            document.documentElement.setAttribute('data-theme', theme);
+            var meta = document.getElementById('theme-color-meta');
+            if (meta) meta.setAttribute('content', theme === 'light' ? '#f4f0e8' : '#0c0b0a');
+
+            function enter() {
+                document.documentElement.classList.add('is-entered');
+            }
+            if (reduce) enter();
+            else requestAnimationFrame(function () {
+                requestAnimationFrame(enter);
+            });
+        })();
+    </script>
+</body>
+</html>

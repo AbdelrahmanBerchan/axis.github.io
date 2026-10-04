@@ -67,6 +67,28 @@ body {
     overflow-x: hidden;
 }
 
+/* First-visit page entrance */
+.page-enter {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: var(--ink);
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.85s var(--ease-out);
+}
+
+html.is-entered .page-enter {
+    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-enter {
+        transition: none;
+        opacity: 0;
+    }
+}
+
 /* Smooth theme crossfade without fighting every property forever */
 html.theme-animating,
 html.theme-animating body,
