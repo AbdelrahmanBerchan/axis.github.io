@@ -700,7 +700,7 @@ function initReveals() {
 
 const DOWNLOAD_WORKER_BASE = 'https://axis-downloads.axis-browser-dl.workers.dev';
 const DIRECT_DMG_URL =
-    'https://github.com/AbdelrahmanBerchan/Axis-Browser/releases/download/v0.3.1/Axis-0.3.1-arm64.dmg';
+    'https://github.com/AbdelrahmanBerchan/Axis-Browser/releases/download/v0.3.2/Axis-0.3.2-arm64.dmg';
 const DEVICE_STORAGE_KEY = 'axis_device_id';
 
 function getAxisDeviceId() {
