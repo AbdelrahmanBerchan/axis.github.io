@@ -51,7 +51,7 @@
                 track('download_click', {
                     event_category: 'download',
                     event_label: 'macOS',
-                    file_name: 'Axis-0.3.2-arm64.dmg',
+                    file_name: 'Axis-0.3.2-a-arm64.dmg',
                     page_path: location.pathname,
                 });
                 return;
