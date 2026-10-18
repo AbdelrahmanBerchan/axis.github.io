@@ -4,7 +4,7 @@
  */
 window.AXIS_I18N = {
   defaultLang: "en",
-  sourceHash: "20261018a",
+  sourceHash: "20261018b",
   catalog: [
     { code: "en", native: "English", name: "English", dir: "ltr", translate: "en" },
     { code: "ar", native: "العربية", name: "Arabic", dir: "rtl", translate: "ar" },
@@ -129,7 +129,7 @@ window.AXIS_I18N = {
       "download.eyebrow": "Get started",
       "download.title": "Get Axis Browser",
       "download.subtitle": "Minimal. Customizable. Built for speed.",
-      "download.meta": "Apple Silicon v0.3.2-a. {count} downloads",
+      "download.meta": "Apple Silicon v0.3.2a. {count} downloads",
       "download.soon": "Coming soon",
       "download.note": "macOS (Apple Silicon) is ready. Follow <a href=\"https://github.com/AbdelrahmanBerchan/Axis-Browser/releases\" target=\"_blank\" rel=\"noopener noreferrer\">releases on GitHub</a> for Windows and Linux.",
       "download.gatekeeper": "Axis is unsigned, so macOS may say it is damaged or blocked. That is Gatekeeper, not a bad download. Right click Axis.app → Open, or go to <strong>System Settings → Privacy &amp; Security</strong> and choose <strong>Open Anyway</strong>.",
