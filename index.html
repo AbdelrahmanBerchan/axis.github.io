@@ -28,6 +28,19 @@
     <script src="analytics.js?v=ga1"></script>
     <script>
         window.gtag('config', 'AW-18527990537');
+        // Ads conversion for the download button. Returns true so the
+        // normal download is never blocked if the tag is slow or blocked.
+        function gtag_report_conversion() {
+            try {
+                window.gtag('event', 'conversion', {
+                    'send_to': 'AW-18527990537/a097COmni6QdEInm6oJF',
+                    'value': 1.0,
+                    'currency': 'USD'
+                });
+            } catch (e) {}
+            return true;
+        }
+        window.gtag_report_conversion = gtag_report_conversion;
     </script>
 </head>
 <body>
@@ -329,7 +342,7 @@
     </footer>
 
     <script src="i18n.js?v=v032a2"></script>
-    <script src="script.js?v=v032a2"></script>
+    <script src="script.js?v=v032a2-ads1"></script>
 </body>
 </html>
 

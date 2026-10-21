@@ -737,6 +737,14 @@ if (macBtn) {
     macBtn.setAttribute('rel', 'noopener noreferrer');
     macBtn.addEventListener('click', () => {
         macBtn.href = macDownloadUrl();
+        // Fire the Ads conversion, but never prevent or delay the download.
+        if (typeof window.gtag_report_conversion === 'function') {
+            try {
+                window.gtag_report_conversion();
+            } catch {
+                /* ignore */
+            }
+        }
         recordMacDownload();
         let ticks = 0;
         const timer = setInterval(() => {
